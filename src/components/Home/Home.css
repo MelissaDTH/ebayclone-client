@@ -1,0 +1,29 @@
+.home {
+    background-color: whitesmoke;
+    position: relative;
+    width: 950px;
+    margin: 0 auto;
+  }
+
+  .home .title {
+    position: sticky;
+    display: inline-flexbox;
+    font-size: 40px;
+    background-color: white;
+    /* background-size: 20px; */
+    padding: 10px;
+  }
+
+.adv-page-button, .ad-form-button {
+    background-color: white;
+    border: solid black 1px;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.adv-page-button:hover, .ad-form-button:hover {
+    background-color: cadetblue;
+    color: white;
+}
