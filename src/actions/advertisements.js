@@ -4,6 +4,8 @@ import request from 'superagent'
 export const ADVERTISEMENTS_FETCHED = 'ADVERTISEMENTS_FETCHED'
 export const ADVERTISEMENT_FETCHED = 'ADVERTISEMENT_FETCHED'
 export const NEW_ADVERTISEMENT = 'NEW_ADVERTISEMENT'
+export const DELETE_ADVERTISEMENT_SUCCES = 'DELETE_ADVERTISEMENT_SUCCES'
+export const ADVERTISEMENT_UPDATE_SUCCESS = 'ADVERTISEMENT_UPDATE_SUCCESS'
 
 const baseUrl = 'http://localhost:4000' // url from the api
 
@@ -63,7 +65,6 @@ export const loadAdvertisement = (id) => (dispatch, getState) => {
 }
 
 // delete one advertisement
-export const DELETE_ADVERTISEMENT_SUCCES = 'DELETE_ADVERTISEMENT_SUCCES'
 const deleteAdvertisementSuccess = id => ({
   type: DELETE_ADVERTISEMENT_SUCCES,
   payload: id
@@ -79,6 +80,24 @@ export const deleteAdvertisement = id => (dispatch, getState) => {
     .then(response => {
       console.log("response delete body:", response.body)
       dispatch(deleteAdvertisementSuccess(response.body))
+    })
+    .catch(console.error)
+}
+
+// Update an advertisement
+const advertisementUpdateSuccess = advertisement => ({
+  type: ADVERTISEMENT_UPDATE_SUCCESS,
+  payload: advertisement
+})
+
+export const updateAdvertisement = (id, newdata) => (dispatch) => {
+  // a GET /advertisement request
+  request
+    .put(`${baseUrl}/advertisements/${id}`)
+    .send(newdata)
+    .then(response => {
+      // dispatch an ADVERTISEMENTS_FETCHED action that contains the ad's
+      dispatch(advertisementUpdateSuccess(response.body))
     })
     .catch(console.error)
 }
