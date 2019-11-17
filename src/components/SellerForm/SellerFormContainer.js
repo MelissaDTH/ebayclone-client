@@ -6,8 +6,12 @@ import SellerForm from "./SellerForm";
 class CreateFormContainer extends React.Component {
   state = {
     title: "",
-    url: ""
-  };
+    description: "",
+    url: "",
+    price: "",
+    email: "",
+    phonenumber: ""
+};
 // In a controlled component setting, any <input> contains an onChange property with a callback. This callback usually updates some sort of state (component state or Redux state). The callback is also a good place to do validations.
   onChange = event => {
     this.setState({
@@ -19,10 +23,14 @@ class CreateFormContainer extends React.Component {
     event.preventDefault();
 
     this.props.createAdvertisement(this.state);
-
+    // this is setting the state to be cleared again
     this.setState({
       title: "",
-      url: ""
+      description: "",
+      url: "",
+      price: "",
+      email: "",
+      phonenumber: ""
     });
   };
 

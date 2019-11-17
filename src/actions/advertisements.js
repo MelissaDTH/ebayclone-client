@@ -61,3 +61,24 @@ export const loadAdvertisement = (id) => (dispatch, getState) => {
     })
     .catch(console.error)
 }
+
+// delete one advertisement
+export const DELETE_ADVERTISEMENT_SUCCES = 'DELETE_ADVERTISEMENT_SUCCES'
+const deleteAdvertisementSuccess = id => ({
+  type: DELETE_ADVERTISEMENT_SUCCES,
+  payload: id
+})
+
+export const deleteAdvertisement = id => (dispatch, getState) => {
+  // const jwt = getState().user.jwt; //AUTHORIZATION
+  //console.log("Login: ", getState().login)
+  //console.log("Advertisement: ", id)
+  request
+    .delete(`${baseUrl}/advertisements/${id}`)
+    // .set("Authorization", `Bearer ${jwt}`) //AUTHORIZATION
+    .then(response => {
+      console.log("response delete body:", response.body)
+      dispatch(deleteAdvertisementSuccess(response.body))
+    })
+    .catch(console.error)
+}
