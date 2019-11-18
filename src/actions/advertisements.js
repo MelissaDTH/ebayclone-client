@@ -64,7 +64,7 @@ export const loadAdvertisement = (id) => (dispatch, getState) => {
     .catch(console.error)
 }
 
-// delete one advertisement
+// delete one advertisement (use the action in both reducers wherever it has to be used)
 const deleteAdvertisementSuccess = id => ({
   type: DELETE_ADVERTISEMENT_SUCCES,
   payload: id
@@ -84,7 +84,7 @@ export const deleteAdvertisement = id => (dispatch, getState) => {
     .catch(console.error)
 }
 
-// Update an advertisement
+// Update an advertisement (use the action in both reducers wherever it has to be used)
 const advertisementUpdateSuccess = advertisement => ({
   type: ADVERTISEMENT_UPDATE_SUCCESS,
   payload: advertisement
@@ -96,6 +96,7 @@ export const updateAdvertisement = (id, newdata) => (dispatch) => {
     .put(`${baseUrl}/advertisements/${id}`)
     .send(newdata)
     .then(response => {
+      console.log("response update body:", response.body)
       // dispatch an ADVERTISEMENTS_FETCHED action that contains the ad's
       dispatch(advertisementUpdateSuccess(response.body))
     })

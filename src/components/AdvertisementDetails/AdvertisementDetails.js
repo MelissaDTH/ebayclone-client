@@ -2,37 +2,54 @@ import React, { Fragment } from "react";
 import SellerForm from "../SellerForm/SellerForm";
 
 export default function advertisementDetails(props) {
-  // const { toggleEdit, editMode } = props
-  // if (!props.advertisement) return <h3>Loading...</h3>;
+  const {
+    state,
+    advertisement,
+    onDelete,
+    toggleEdit,
+    onChange,
+    onSubmit,
+  } = props
 
-  if (props.editMode) {
+
+  if (!props.advertisement) return <h3>Loading...</h3>;
+
+  if (state.editMode) {
+    const { title, description, price, phonenumber, url, email } = state
+
     return (
       <Fragment>
         <SellerForm
-          title={props.advertisement.title}
-          date={props.advertisement.description}
-          url={props.advertisement.url}
-          onChange={props.onChange}
-          onSubmit={props.onSubmit}
+          title={title}
+          description={description}
+          url={url}
+          price={price}
+          phonenumber={phonenumber}
+          email={email}
+          onChange={onChange}
+          onSubmit={onSubmit}
         />
-        <button onClick={props.toggleEdit}>Edit</button>
+        <button onClick={toggleEdit}>Edit</button>
       </Fragment>
     );
   }
+
+  const { title, description, price, phonenumber, url } = advertisement
+
   return (
     <div>
-      <h1>{props.advertisement.title}</h1>
-      <i>{props.advertisement.description}</i>
+      <h1>{title}</h1>
+      <i>{description}</i>
       <p>
-        € {props.advertisement.price}
+        € {price}
         <br />
         <br />
-        Seller's phone number: +{props.advertisement.phonenumber}
+        Seller's phone number: +{phonenumber}
       </p>
-      <img src={props.advertisement.url} alt={props.advertisement.title} />
+      <img src={url} alt={title} />
       <br />
-      <button onClick={props.onDelete}>DELETE PRODUCT</button>
-      <button onClick={props.toggleEdit}>EDIT PRODUCT</button>
+      <button onClick={onDelete}>DELETE PRODUCT</button>
+      <button onClick={toggleEdit}>EDIT PRODUCT</button>
     </div>
   );
 }

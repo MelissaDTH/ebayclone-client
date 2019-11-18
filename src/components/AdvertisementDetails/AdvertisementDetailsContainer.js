@@ -12,7 +12,10 @@ class AdvertisementDetailsContainer extends React.Component {
     editMode: false,
     title: "",
     description: "",
-    url: ""
+    url: "",
+    price: "",
+    phonenumber: "",
+    email: ""
   };
 
   onChange = event => {
@@ -24,23 +27,30 @@ class AdvertisementDetailsContainer extends React.Component {
   onSubmit = event => {
     event.preventDefault();
 
-    const { title, description, url } = this.state;
+    const { title, description, url, price, email, phonenumber } = this.state;
     this.props.updateAdvertisement(this.props.advertisement.id, {
       title,
       description,
-      url
+      url,
+      price,
+      email,
+      phonenumber
     });
 
     this.setState({
       title: "",
       description: "",
-      url: ""
+      url: "",
+      price: "",
+      phonenumber: "",
+      email: ""
     });
 
     this.toggleEdit();
   };
 
   componentDidMount() {
+    // console.log("state?", this.state);
     this.props.loadAdvertisement(Number(this.props.match.params.id));
   }
 
@@ -50,26 +60,42 @@ class AdvertisementDetailsContainer extends React.Component {
   };
 
   toggleEdit = () => {
-    const { title, description, url } = this.props.advertisement;
-    this.setState({ editMode: !this.state.editMode, title, description, url });
+    const {
+      title,
+      description,
+      url,
+      price,
+      email,
+      phonenumber
+    } = this.props.advertisement;
+    // console.log("edit mode ", this.state.editMode);
+    this.setState({
+      editMode: !this.state.editMode,
+      title,
+      description,
+      url,
+      price,
+      email,
+      phonenumber
+    });
   };
 
   render() {
     // console.log("this.props.advertisement", this.props.advertisement);
-    const advertisement = this.state.editMode
-      ? {
-          title: this.state.title,
-          description: this.state.description,
-          url: this.state.url
-        }
-      : this.props.advertisement;
-   
-     return (
+    // const advertisement = this.state.editMode
+    //   ? {
+    //       title: this.state.title,
+    //       description: this.state.description,
+    //       url: this.state.url
+    //     }
+    //   : this.props.advertisement;
+
+    return (
       <AdvertisementDetails
-        advertisement={advertisement}
+        state={this.state}
+        advertisement={this.props.advertisement}
         onDelete={this.onDelete}
         toggleEdit={this.toggleEdit}
-        editMode={this.editMode}
         onChange={this.onChange}
         onSubmit={this.onSubmit}
       />
@@ -80,11 +106,18 @@ class AdvertisementDetailsContainer extends React.Component {
 const mapStateToProps = state => {
   // console.log('state?', state, 'state ads?', state.advertisement)
   return {
-    advertisement: state.advertisement,
+    advertisement: state.advertisement
     // onDelete: state.onDelete
   };
 };
 
-const mapDispatchToProps = { loadAdvertisement, updateAdvertisement, deleteAdvertisement };
+const mapDispatchToProps = {
+  loadAdvertisement,
+  updateAdvertisement,
+  deleteAdvertisement
+};
 
-export default connect( mapStateToProps, mapDispatchToProps )(AdvertisementDetailsContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdvertisementDetailsContainer);

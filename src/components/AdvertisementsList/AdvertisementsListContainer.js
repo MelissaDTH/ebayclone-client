@@ -5,7 +5,7 @@ import AdvertisementsList from './AdvertisementsList'
 
 class AdvertisementsListContainer extends React.Component {
   componentDidMount() {
-      console.log('Component mounts?', this.props.loadAdvertisements());
+      // console.log('Component mounts?', this.props.loadAdvertisements());
       
     this.props.loadAdvertisements()
   }
