@@ -1,20 +1,55 @@
-import React from 'react'
+import React, { Fragment } from "react";
+import SellerForm from "../SellerForm/SellerForm";
 
 export default function advertisementDetails(props) {
+  const {
+    state,
+    advertisement,
+    onDelete,
+    toggleEdit,
+    onChange,
+    onSubmit,
+  } = props
+
+
+  if (!props.advertisement) return <h3>Loading...</h3>;
+
+  if (state.editMode) {
+    const { title, description, price, phonenumber, url, email } = state
+
     return (
-        <div>
-            <h2>Details of the product</h2>    
-            {console.log('logging props.advertisement', props.advertisement)}
-                   
-            {!props.advertisement ? "Loading..." : (
-                <div>
-                    <h1>{props.advertisement.title}</h1>
-                    <i>{props.advertisement.description}</i>
-                    <p>{props.advertisement.price}
-                    {props.advertisement.phonenumber}</p>
-                    <img src={props.advertisement.url} alt={props.advertisement.title} />
-                </div>
-            )}
-        </div>
-    )
+      <Fragment>
+        <SellerForm
+          title={title}
+          description={description}
+          url={url}
+          price={price}
+          phonenumber={phonenumber}
+          email={email}
+          onChange={onChange}
+          onSubmit={onSubmit}
+        />
+        <button onClick={toggleEdit}>Edit</button>
+      </Fragment>
+    );
+  }
+
+  const { title, description, price, phonenumber, url } = advertisement
+
+  return (
+    <div>
+      <h1>{title}</h1>
+      <i>{description}</i>
+      <p>
+        € {price}
+        <br />
+        <br />
+        Seller's phone number: +{phonenumber}
+      </p>
+      <img src={url} alt={title} />
+      <br />
+      <button onClick={onDelete}>DELETE PRODUCT</button>
+      <button onClick={toggleEdit}>EDIT PRODUCT</button>
+    </div>
+  );
 }
